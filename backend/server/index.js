@@ -8,6 +8,8 @@ app.use(express.json());
 
 const functions = require('firebase-functions');
 
+const { generateVerificationCode } = require('./verification');
+
 const cors = require('cors');
 // Automatically allow cross-origin requests
 app.use(cors({ origin: true }));
@@ -16,6 +18,14 @@ app.use(cors({ origin: true }));
 app.post('/api/fake', (req, res) => {
   console.log(req.body);
   res.json({ message: 'Call received!' });
+});
+
+app.post('/api/generate_verification_code', (req, res) => {
+  generateVerificationCode(req, res).then((response) => {
+    if (response) {
+      res.json(response);
+    }
+  });
 });
 
 app.listen(PORT, () => {
