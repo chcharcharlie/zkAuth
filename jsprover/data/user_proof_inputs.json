@@ -1,7 +1,7 @@
 {
-  "functionId": 12,
-  "rhAccountNumberHash": 22345678,
-  "secret": 234567,
-  "statementIdx": 1,
-  "valueRandomizer": 666
+  "emailHash": 12345,
+  "verificationCode": 67890,
+  "randomizer": 133847,
+  "statementIdx": 3,
+  "appPublicId": 101
 }

@@ -7,6 +7,10 @@ function calculateMerklePath(elements, position, levels) {
   var path = []
   var pathIndices = []
 
+  for (var i = 0; i < current_stack.length; i++) {
+    current_stack[i] = BigInt(current_stack[i])
+  }
+
   while (levels > 0) {
     var new_stack = []
     for (var i = 0; i * 2 < current_stack.length; i++) {
@@ -59,7 +63,7 @@ snarkjs.plonk.fullProve(
     appPublicId: appPublicId,
   },
   "../../circuits/src/circuit_js/circuit.wasm",
-  "../../circuits/src/circuit_final_16.zkey"
+  "../../circuits/src/circuit_final.zkey"
 ).then(
   (res) => {
     fs.writeFileSync(
@@ -75,7 +79,6 @@ snarkjs.plonk.fullProve(
       '../data/public_results.json',
       JSON.stringify(
         {
-          "merkleRoot": res.publicSignals[0],
           "userId": res.publicSignals[1],
           "nullifier": res.publicSignals[2],
           "appPublicId": res.publicSignals[3],

@@ -4,6 +4,10 @@ const fs = require('fs')
 function calculateMerkleRoot(elements, levels) {
   var current_stack = elements
 
+  for (var i = 0; i < current_stack.length; i++) {
+    current_stack[i] = BigInt(current_stack[i])
+  }
+
   while (levels > 0) {
     var new_stack = []
     for (var i = 0; i * 2 < current_stack.length; i++) {

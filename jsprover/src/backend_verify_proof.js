@@ -17,7 +17,7 @@ const publicSignals = [
   publicResults.appPublicId,
 ]
 
-const vKey = JSON.parse(fs.readFileSync("../../circuits/src/verification_key_16.json"))
+const vKey = JSON.parse(fs.readFileSync("../../circuits/src/verification_key.json"))
 
 snarkjs.plonk.verify(vKey, publicSignals, proof).then((res) => {
   if (res === true) {
