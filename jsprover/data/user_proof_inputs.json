@@ -1,0 +1,7 @@
+{
+  "functionId": 12,
+  "rhAccountNumberHash": 22345678,
+  "secret": 234567,
+  "statementIdx": 1,
+  "valueRandomizer": 666
+}
