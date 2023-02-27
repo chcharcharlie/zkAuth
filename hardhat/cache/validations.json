@@ -1,0 +1,75 @@
+{
+  "version": "3.2",
+  "log": [
+    {
+      "Registry": {
+        "src": "contracts/registry.sol:4",
+        "version": {
+          "withMetadata": "f7fc78e89190c7f0583a1c49e8bd81a5094ec34b34eacc4d5c297ee123c39826",
+          "withoutMetadata": "690e7a275bc672987e2854437fdfb45f852533149f514451e2687fb95bb2fa73",
+          "linkedWithoutMetadata": "690e7a275bc672987e2854437fdfb45f852533149f514451e2687fb95bb2fa73"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "()",
+          "addRecord(uint256,uint256)",
+          "getState()",
+          "getRoots()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Registry",
+            "src": "contracts/registry.sol:17"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "owner",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "Registry",
+              "src": "contracts/registry.sol:11"
+            },
+            {
+              "label": "records",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_array(t_uint256)dyn_storage",
+              "contract": "Registry",
+              "src": "contracts/registry.sol:14"
+            },
+            {
+              "label": "roots",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_array(t_uint256)dyn_storage",
+              "contract": "Registry",
+              "src": "contracts/registry.sol:15"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_uint256)dyn_storage": {
+              "label": "uint256[]",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      }
+    }
+  ]
+}
