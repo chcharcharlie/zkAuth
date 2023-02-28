@@ -1,24 +1,19 @@
-const randomize = require('randomatic');
-
 const user = 'zkauth@gmail.com';
 const pass = '';
 
 /**
- * generate verification code and send email
- * @param {req} req
- * @param {res} res
+ * send verification code email
+ * @param {email} email
+ * @param {verificationCode} verificationCode
  */
-async function generateVerificationCode(req, res) {
-  const verificationCode = randomize('0', 6);
-  const email = req.body.email;
-
+async function sendVerificationCode(email, verificationCode) {
   const send = require('gmail-send')({
     user: user,
     pass: pass,
     to: email,
     subject: 'Your ZKAuth Verification Code',
   });
-  send({
+  await send({
     text: verificationCode,
   }, (error, result, fullResult) => {
     if (error) console.error(error);
@@ -28,4 +23,4 @@ async function generateVerificationCode(req, res) {
   return;
 }
 
-module.exports = { generateVerificationCode };
+module.exports = { sendVerificationCode };

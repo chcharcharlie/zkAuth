@@ -8,7 +8,7 @@ app.use(express.json());
 
 const functions = require('firebase-functions');
 
-const { generateVerificationCode } = require('./verification');
+const { generateVerificationCode } = require('./views');
 
 const cors = require('cors');
 // Automatically allow cross-origin requests
