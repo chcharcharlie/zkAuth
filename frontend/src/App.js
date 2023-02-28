@@ -1,24 +1,33 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import CodePrompt from './CodePrompt';
+import EmailPrompt from './EmailPrompt';
 
 function App() {
+  const [showCodePrompt, setShowCodePrompt] = useState(false);
+  const [email, setEmail] = useState('');
+  const [timestamp, setTimestamp] = useState('');
+  const [emailHash, setEmailHash] = useState('');
+  const [statementIdx, setStatementIdx] = useState('');
+  const [isVerified, setIsVerified] = useState(false);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      {
+        !showCodePrompt ?
+          <EmailPrompt
+            setShowCodePrompt={setShowCodePrompt}
+            email={email}
+            setEmail={setEmail}
+            setTimestamp={setTimestamp}
+            setEmailHash={setEmailHash}
+            setStatementIdx={setStatementIdx}>
+          </EmailPrompt>
+          : <div />
+      }
+      {showCodePrompt ? <CodePrompt email={email} timestamp={timestamp} emailHash={emailHash} statementIdx={statementIdx} setIsVerified={setIsVerified}></CodePrompt> : <div />}
+      <div>{isVerified}</div>
+    </div >
   );
 }
 
