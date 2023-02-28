@@ -28,6 +28,14 @@ app.post('/api/generate_verification_code', (req, res) => {
   });
 });
 
+app.post('/api/validate_proof', (req, res) => {
+  validateProof(req, res).then((response) => {
+    if (response) {
+      res.json(response);
+    }
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });

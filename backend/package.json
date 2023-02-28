@@ -19,7 +19,8 @@
     "firebase-admin": "^11.5.0",
     "firebase-functions": "^4.2.1",
     "gmail-send": "^1.8.14",
-    "randomatic": "^3.1.1"
+    "randomatic": "^3.1.1",
+    "snarkjs": "^0.5.0"
   },
   "devDependencies": {}
 }

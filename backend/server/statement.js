@@ -1,4 +1,4 @@
-const {poseidon} = require('circomlib');
+const { poseidon } = require('circomlib');
 const crypto = require('crypto');
 
 
@@ -15,4 +15,4 @@ function generateStatement(email, verificationCode, randomizer) {
   return [poseidon([bigInt, verificationCode, randomizer]), bigInt];
 }
 
-module.exports = {generateStatement};
+module.exports = { generateStatement };
