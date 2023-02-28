@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import CodePrompt from './CodePrompt';
 import EmailPrompt from './EmailPrompt';
+import WalletPrompt from './WalletPrompt';
 
 function App() {
   const [showCodePrompt, setShowCodePrompt] = useState(false);
@@ -13,6 +14,9 @@ function App() {
 
   return (
     <div className="App">
+      <WalletPrompt
+        setIsVerified={setIsVerified}>
+      </WalletPrompt>
       {
         !showCodePrompt ?
           <EmailPrompt
