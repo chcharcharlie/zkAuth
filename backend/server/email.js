@@ -1,5 +1,5 @@
-const user = 'zkauth@gmail.com';
-const pass = '';
+const user = 'zeroknowledge.auth@gmail.com';
+const pass = 'kjqiabrojfkpljin';
 
 /**
  * send verification code email
@@ -11,7 +11,7 @@ async function sendVerificationCode(email, verificationCode) {
     user: user,
     pass: pass,
     to: email,
-    subject: 'Your ZKAuth Verification Code',
+    subject: 'Your ZK Auth Verification Code',
   });
   await send({
     text: verificationCode,

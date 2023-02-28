@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-const {poseidon} = require('circomlib');
+const { poseidon } = require('circomlib');
 
 /**
  * generate verification code and send email
@@ -34,4 +34,4 @@ function calculateMerkleRoot(elements, levels) {
   return currentStack[0];
 }
 
-module.exports = {calculateMerkleRoot};
+module.exports = { calculateMerkleRoot };
