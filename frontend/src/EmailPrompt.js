@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Button, FormLabel } from '@mui/material';
+import { Input, Button } from '@mui/material';
 import { BACKEND_URL } from './constants';
 
 function EmailPrompt({ setShowCodePrompt, email, setEmail, setTimestamp, setEmailHash, setStatementIdx, setShowEmailPrompt }) {
@@ -36,8 +36,8 @@ function EmailPrompt({ setShowCodePrompt, email, setEmail, setTimestamp, setEmai
   return (
     <form onSubmit={handleSubmit}>
       <Input
+        className="input"
         type="email"
-        id="email-input"
         value={email}
         onChange={handleInputChange}
         placeholder="Enter your email"

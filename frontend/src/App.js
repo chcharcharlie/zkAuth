@@ -31,11 +31,12 @@ function App() {
             setEmailHash={setEmailHash}
             setStatementIdx={setStatementIdx}
             setShowEmailPrompt={setShowEmailPrompt}>
-          </EmailPrompt> : <div onClick={() => setShowEmailPrompt(true)} className="signin-button">Sign in with Email</div>
+          </EmailPrompt> : <div />
       }
+      {!showEmailPrompt && !showCodePrompt ? <div onClick={() => setShowEmailPrompt(true)} className="signin-button">Sign in with Email</div> : <div />}
       {showCodePrompt ? <CodePrompt email={email} timestamp={timestamp} emailHash={emailHash} statementIdx={statementIdx} setIsVerified={setIsVerified}></CodePrompt> : <div />}
       <div>{isVerified}</div>
-      <div className='footer'>Build with ❤️ in Denver 2023</div>
+      <div className='footer'>Build with ❤️ in ETHDenver 2023</div>
     </div >
   );
 }

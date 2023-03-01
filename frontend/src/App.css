@@ -22,6 +22,14 @@
   margin-bottom: 20px; /* Set bottom margin */
 }
 
+.input {
+  margin: 8px;
+  padding: 4px 20px;
+  border-radius: 5px;
+  border: 1px #ccc;
+  font-size: 16px;
+}
+
 .signin-button {
   background-color: #b34fff; /* Set background color */
   border: none; /* Remove border */

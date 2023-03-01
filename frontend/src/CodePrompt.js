@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Button, FormLabel } from '@mui/material';
+import { Input, Button } from '@mui/material';
 import generateZKProof from './utils.js';
 
 function CodePrompt({ email, timestamp, emailHash, statementIdx, setIsVerified }) {
@@ -17,10 +17,8 @@ function CodePrompt({ email, timestamp, emailHash, statementIdx, setIsVerified }
 
   return (
     <form onSubmit={handleSubmit}>
-      <FormLabel htmlFor="code-input">Code:</FormLabel>
-      <br />
       <Input
-        id="code-input"
+        className="input"
         value={code}
         onChange={handleInputChange}
         placeholder="Enter your code"
