@@ -35,8 +35,6 @@ function EmailPrompt({ setShowCodePrompt, email, setEmail, setTimestamp, setEmai
 
   return (
     <form onSubmit={handleSubmit}>
-      <FormLabel htmlFor="email-input">Email:</FormLabel>
-      <br />
       <Input
         type="email"
         id="email-input"

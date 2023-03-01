@@ -35,6 +35,7 @@ function App() {
       }
       {showCodePrompt ? <CodePrompt email={email} timestamp={timestamp} emailHash={emailHash} statementIdx={statementIdx} setIsVerified={setIsVerified}></CodePrompt> : <div />}
       <div>{isVerified}</div>
+      <div className='footer'>Build with ❤️ in Denver 2023</div>
     </div >
   );
 }

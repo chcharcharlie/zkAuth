@@ -15,6 +15,13 @@
   margin-bottom: 20px; /* Set bottom margin */
 }
 
+.footer {
+  font-size: 16px; /* Set font size */
+  text-align: center; /* Center align text */
+  margin-top: 40px; /* Set top margin */
+  margin-bottom: 20px; /* Set bottom margin */
+}
+
 .signin-button {
   background-color: #b34fff; /* Set background color */
   border: none; /* Remove border */
@@ -23,7 +30,7 @@
   text-align: center; /* Center align text */
   text-decoration: none; /* Remove underline */
   font-size: 16px; /* Set font size */
-  margin: 4px 2px; /* Set margin */
+  margin: 8px; /* Set margin */
   cursor: pointer; /* Set cursor type */
   border-radius: 16px; /* Add border radius */
 }
