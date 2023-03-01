@@ -46,6 +46,10 @@ function calculateMerklePath(elements, position, levels) {
   return { path, pathIndices }
 }
 
+const sleep = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
 // const proofInputsData = fs.readFileSync('../data/user_proof_inputs.json')
 // const proofInputs = JSON.parse(proofInputsData)
 // const emailHash = proofInputs.emailHash
@@ -55,6 +59,13 @@ const appPublicId = 100
 
 const generateZKProof = async (email, verificationCode, timestamp, emailHash, statementIdx, setIsVerified) => {
   const contract = new ethers.Contract(contractAddress, contractABI, infuraProvider);
+
+  var merkle_state = await contract.getState()
+  while (merkle_state[0].length <= statementIdx) {
+    console.log("still waiting for contract to settle")
+    await sleep(1000);
+    merkle_state = await contract.getState()
+  }
 
   contract.getState().then((merkle_state) => {
     const { path, pathIndices } = calculateMerklePath(merkle_state[0], statementIdx, 8)
