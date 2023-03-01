@@ -7,6 +7,27 @@
   flex-direction: column;
 }
 
+.title {
+  font-size: 36px; /* Set font size */
+  font-weight: bold; /* Set font weight */
+  text-align: center; /* Center align text */
+  margin-top: 50px; /* Set top margin */
+  margin-bottom: 20px; /* Set bottom margin */
+}
+
+.signin-button {
+  background-color: #b34fff; /* Set background color */
+  border: none; /* Remove border */
+  color: #ffffff; /* Set text color */
+  padding: 10px 100px; /* Set padding */
+  text-align: center; /* Center align text */
+  text-decoration: none; /* Remove underline */
+  font-size: 16px; /* Set font size */
+  margin: 4px 2px; /* Set margin */
+  cursor: pointer; /* Set cursor type */
+  border-radius: 16px; /* Add border radius */
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

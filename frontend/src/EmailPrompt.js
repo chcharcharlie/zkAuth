@@ -2,7 +2,7 @@ import React from 'react';
 import { Input, Button, FormLabel } from '@mui/material';
 import { BACKEND_URL } from './constants';
 
-function EmailPrompt({ setShowCodePrompt, email, setEmail, setTimestamp, setEmailHash, setStatementIdx }) {
+function EmailPrompt({ setShowCodePrompt, email, setEmail, setTimestamp, setEmailHash, setStatementIdx, setShowEmailPrompt }) {
 
   const handleInputChange = (event) => {
     setEmail(event.target.value);
@@ -24,6 +24,7 @@ function EmailPrompt({ setShowCodePrompt, email, setEmail, setTimestamp, setEmai
     setStatementIdx(jsonData["statementIdx"])
     // show code prompt
     setShowCodePrompt(true)
+    setShowEmailPrompt(false)
   };
 
   const handleSubmit = (event) => {

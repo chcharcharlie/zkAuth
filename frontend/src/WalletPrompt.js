@@ -64,7 +64,7 @@ function WalletPrompt({ setIsVerified }) {
   }
 
   return (
-    <div onClick={() => { connectWallet() }}>Sign In with Wallet</div>
+    <div className="signin-button" onClick={() => { connectWallet() }}>Sign In with Wallet</div>
   );
 }
 
