@@ -12,6 +12,7 @@ function CodePrompt({ email, timestamp, emailHash, statementIdx }) {
   };
 
   const handleSubmit = async (event) => {
+    setMessageState("LOADING")
     event.preventDefault();
     const res = await generateZKProof(email, code, timestamp, emailHash, statementIdx)
     console.log(`User entered code: ${code}`);
@@ -39,7 +40,7 @@ function CodePrompt({ email, timestamp, emailHash, statementIdx }) {
           placeholder="Enter your code"
           required
         />
-        <Button type="submit" onClick={() => setMessageState("LOADING")}>Submit</Button>
+        <Button type="submit">Submit</Button>
       </form>
     );
   }

@@ -51,7 +51,7 @@ export default function CircularStatic() {
           return prevProgress + 10;
         }
       });
-    }, 1500);
+    }, 1200);
     return () => {
       clearInterval(timer);
     };
