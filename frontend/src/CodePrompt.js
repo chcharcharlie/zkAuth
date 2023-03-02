@@ -18,7 +18,7 @@ function CodePrompt({ email, timestamp, emailHash, statementIdx }) {
     console.log(`User entered code: ${code}`);
     if (window.opener) {
       console.log("pushing message back")
-      window.opener.postMessage(res, "http://localhost:3002")
+      window.opener.postMessage(res, document.referrer)
       window.close()
     }
   };

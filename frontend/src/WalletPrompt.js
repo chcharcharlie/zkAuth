@@ -33,7 +33,7 @@ function WalletPrompt({ setShowSignInEmailPrompt }) {
     const res = await generateZKProof(address, proofInputs["verificationCode"], proofInputs["timeStamp"], proofInputs["walletAddressHash"], proofInputs["statementIdx"])
     if (window.opener) {
       console.log("pushing message back")
-      window.opener.postMessage(res, "http://localhost:3002")
+      window.opener.postMessage(res, document.referrer)
       window.close()
     }
   };

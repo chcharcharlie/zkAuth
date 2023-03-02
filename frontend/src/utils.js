@@ -60,7 +60,9 @@ const generateZKProof = async (email, verificationCode, timestamp, emailHash, st
 
   const { path, pathIndices } = calculateMerklePath(merkle_state[0], statementIdx, 8)
   console.log("Start to do snarkjs fullProve")
-  const appPublicId = 100
+  // const appPublicId = 100
+  const queryParameters = new URLSearchParams(window.location.search)
+  const appPublicId = queryParameters.get("appPublicId")
 
   const res = await snarkjs.plonk.fullProve(
     {

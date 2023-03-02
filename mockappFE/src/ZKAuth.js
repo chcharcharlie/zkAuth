@@ -25,8 +25,8 @@ function truncateUserId(userId) {
 }
 
 const ZKAuth = (props) => {
-  const { children, width, height, className, userIdClassName } = props
-  const opts = `dependent=${1}, alwaysOnTop=${1}, alwaysRaised=${1}, alwaysRaised=${1}, width=${width || 500
+  const { children, width, height, className, userIdClassName, onSignInSuccess, onSignInFail } = props
+  const opts = `dependent=${1}, alwaysOnTop=${1}, alwaysRaised=${1}, alwaysRaised=${1}, width=${width || 600
     }, height=${height || 400} left=${left} top=${top}`
   browser = window.self
   const [userId, setUserId] = useState(false);
@@ -60,8 +60,10 @@ const ZKAuth = (props) => {
       const response_json = await response.json()
       if (response_json.isVerified) {
         setUserId(data.publicResults.userId)
+        onSignInSuccess(data.publicResults.userId)
       } else {
         setUserId("Sign in failed")
+        onSignInFail()
       }
     }
   }, false);
@@ -82,7 +84,7 @@ const dualScreenTop =
 const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth
 const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight
 const systemZoom = width / window.screen.availWidth
-const left = (width - 500) / 2 / systemZoom + dualScreenLeft
+const left = (width - 600) / 2 / systemZoom + dualScreenLeft
 const top = (height - 400) / 2 / systemZoom + dualScreenTop
 
 export default ZKAuth
