@@ -53,6 +53,7 @@
   font-family: Gibson, Arial, sans-serif;
   font-size: 16px;
   font-weight: 700;
+  flex-direction: column;
 }
 
 .ZKAuthButton {
@@ -64,6 +65,7 @@
 }
 
 .ZKAuthUserId {
+  margin-top: 20px;
   color: white;
 }
 

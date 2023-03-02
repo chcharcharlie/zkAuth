@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { BACKEND_URL } from './constants';
+import React from 'react';
 
 let browser = window
 let popup = null
@@ -19,28 +18,22 @@ function watcher() {
   }
 }
 
-function truncateUserId(userId) {
-  const len = userId.length
-  return userId.substring(0, 5) + "... ..." + userId.substring(len - 5, len)
-}
-
 const ZKAuth = (props) => {
-  const { children, width, height, className, userIdClassName, onSignInSuccess, onSignInFail } = props
+  const { children, width, height, className, onSignInSuccess, onSignInFail } = props
   const opts = `dependent=${1}, alwaysOnTop=${1}, alwaysRaised=${1}, alwaysRaised=${1}, width=${width || 600
     }, height=${height || 400} left=${left} top=${top}`
   browser = window.self
-  const [userId, setUserId] = useState(false);
+  const { zkAuthUrl, zkAuthBackendUrl, ownAppOrigin, name } = props
 
   const onClickHandler = (evt) => {
     console.log('onClickHandler', props)
 
-    const { url, name } = props
     if (popup && !popup.closed) {
       popup.focus()
       return
     }
 
-    popup = browser.open(url, name, opts)
+    popup = browser.open(zkAuthUrl, name, opts)
     if (timer === null) {
       timer = setInterval(watcher, 500)
     }
@@ -48,9 +41,9 @@ const ZKAuth = (props) => {
   }
 
   browser.addEventListener("message", async (event) => {
-    if (event.origin === "http://localhost:3000") {
+    if (event.origin === ownAppOrigin) {
       const data = event.data
-      const response = await fetch(`http://${BACKEND_URL}/api/validate_proof`, {
+      const response = await fetch(`${zkAuthBackendUrl}/api/validate_proof`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,20 +52,15 @@ const ZKAuth = (props) => {
       })
       const response_json = await response.json()
       if (response_json.isVerified) {
-        setUserId(data.publicResults.userId)
         onSignInSuccess(data.publicResults.userId)
       } else {
-        setUserId("Sign in failed")
         onSignInFail()
       }
     }
   }, false);
 
   return (
-    <div>
-      {!userId && <div className={className} onClick={onClickHandler}>{children}</div>}
-      {userId && <div className={userIdClassName}>Signed In as UserID: {truncateUserId(userId)}</div>}
-    </div>
+    <div className={className} onClick={onClickHandler}>{children}</div>
   )
 }
 

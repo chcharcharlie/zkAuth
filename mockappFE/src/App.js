@@ -1,13 +1,23 @@
+import React, { useState } from 'react';
 import './App.css';
 import ZKAuth from './ZKAuth'
 
 function App() {
+  const [userId, setUserId] = useState(false);
+
   const onSignin = async (userId) => {
     console.log(userId)
+    setUserId(userId)
   }
 
   const onSigninFail = async () => {
     console.log("Sign in failed")
+    setUserId("Sign in failed")
+  }
+
+  function truncateUserId(userId) {
+    const len = userId.length
+    return userId.substring(0, 5) + "... ..." + userId.substring(len - 5, len)
   }
 
   return (
@@ -17,14 +27,16 @@ function App() {
       </div>
       <div className="ZKAuth">
         <ZKAuth
-          url='http://localhost:3000/?appPublicId=100'
+          zkAuthUrl='http://localhost:3000/?appPublicId=100'
+          zkAuthBackendUrl="http://localhost:3001"
+          ownAppOrigin="http://localhost:3000"
           className="ZKAuthButton"
-          userIdClassName="ZKAuthUserId"
           onSignInSuccess={onSignin}
           onSignInFail={onSigninFail}
         >
           SIGN IN WITH ZKAUTH
         </ZKAuth>
+        {userId && <div className="ZKAuthUserId">Signed In as UserID: {truncateUserId(userId)}</div>}
       </div>
     </div >
   );
