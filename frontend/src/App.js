@@ -5,8 +5,11 @@ import EmailPrompt from './EmailPrompt';
 import WalletPrompt from './WalletPrompt';
 
 function App() {
+  const [showSignInWalletPrompt, setShowSignInWalletPrompt] = useState(true);
+  const [showSignInEmailPrompt, setShowSignInEmailPrompt] = useState(true);
   const [showCodePrompt, setShowCodePrompt] = useState(false);
   const [showEmailPrompt, setShowEmailPrompt] = useState(false);
+
   const [email, setEmail] = useState('');
   const [timestamp, setTimestamp] = useState('');
   const [emailHash, setEmailHash] = useState('');
@@ -18,11 +21,11 @@ function App() {
       <div className="title">
         ZKAuth
       </div>
-      <WalletPrompt
-        setIsVerified={setIsVerified}>
-      </WalletPrompt>
+      {showSignInWalletPrompt ? <WalletPrompt setIsVerified={setIsVerified} setShowSignInEmailPrompt={setShowSignInEmailPrompt} /> : <div />}
+      {showSignInEmailPrompt ?
+        <div onClick={() => { setShowEmailPrompt(true); setShowSignInWalletPrompt(false); setShowSignInEmailPrompt(false) }} className="signin-button">Sign In with Email</div> : <div />}
       {
-        !showCodePrompt && showEmailPrompt ?
+        showEmailPrompt ?
           <EmailPrompt
             setShowCodePrompt={setShowCodePrompt}
             email={email}
@@ -33,7 +36,6 @@ function App() {
             setShowEmailPrompt={setShowEmailPrompt}>
           </EmailPrompt> : <div />
       }
-      {!showEmailPrompt && !showCodePrompt ? <div onClick={() => setShowEmailPrompt(true)} className="signin-button">Sign in with Email</div> : <div />}
       {showCodePrompt ? <CodePrompt email={email} timestamp={timestamp} emailHash={emailHash} statementIdx={statementIdx} setIsVerified={setIsVerified}></CodePrompt> : <div />}
       <div>{isVerified}</div>
       <div className='footer'>Build with ❤️ in ETHDenver 2023</div>

@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BACKEND_URL } from './constants';
 import Web3Modal from "web3modal";
 import { ethers } from 'ethers';
 import generateZKProof from './utils.js';
+import CircularStatic from './CircularStatic'
 
-function WalletPrompt({ setIsVerified }) {
+function WalletPrompt({ setIsVerified, setShowSignInEmailPrompt }) {
+  const [messageState, setMessageState] = useState("");
+
   const providerOptions = {}
 
   const web3Modal = new Web3Modal({
@@ -59,15 +62,22 @@ function WalletPrompt({ setIsVerified }) {
         "signature": signature
       }),
     });
+    setMessageState("LOADING");
 
     const jsonData = await response.json();
     console.log(jsonData);
     return jsonData
   }
 
-  return (
-    <div className="signin-button" onClick={() => { connectWallet() }}>Sign In with Wallet</div>
-  );
+  if (messageState === "WALLET_POP_UP") {
+    return <div className="wallet-pop-up-text">Please sign in using your browser based wallet...</div>
+  } else if (messageState === "LOADING") {
+    return <CircularStatic />;
+  } else {
+    return (
+      <div className="signin-button" onClick={() => { connectWallet(); setShowSignInEmailPrompt(false); setMessageState("WALLET_POP_UP") }}>Sign In with Wallet</div>
+    );
+  }
 }
 
 export default WalletPrompt;
