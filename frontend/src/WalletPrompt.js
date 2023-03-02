@@ -77,7 +77,7 @@ function WalletPrompt({ setShowSignInEmailPrompt }) {
     return (
       <div>
         <CircularStatic />
-        <div className="wallet-pop-up-text">Generating ZK Proof...</div>
+        <div className="wallet-pop-up-text">Generating ZK Proof to protect the privacy of your wallet address...</div>
       </div>
     );
   } else {
