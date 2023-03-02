@@ -1,4 +1,3 @@
-import { BACKEND_URL } from './constants';
 const { poseidon } = require('circomlib')
 const snarkjs = require("snarkjs")
 const { contractABI } = require("./constants.js")

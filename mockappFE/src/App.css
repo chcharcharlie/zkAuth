@@ -3,8 +3,9 @@
   height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center; 
-  flex-direction: column;
+  justify-content: center;
+  flex-direction: row;
+  background-color: #2c154b;
 }
 
 .App-logo {
@@ -33,10 +34,44 @@
   color: #61dafb;
 }
 
+.MainImage {
+  width: 40%;
+}
+
+.Image {
+  width: 100%;
+}
+
+.ZKAuth {
+  width: 30%;
+  border-radius: 5px;
+  height: 120px;
+  margin-left: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Gibson, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.ZKAuthButton {
+  cursor: pointer;
+  padding: 30px;
+  border-radius: 8px;
+  background-color: #f8548e;
+  color: white;
+}
+
+.ZKAuthUserId {
+  color: white;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

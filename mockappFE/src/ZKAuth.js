@@ -19,8 +19,13 @@ function watcher() {
   }
 }
 
+function truncateUserId(userId) {
+  const len = userId.length
+  return userId.substring(0, 5) + "... ..." + userId.substring(len - 5, len)
+}
+
 const ZKAuth = (props) => {
-  const { children, width, height, className } = props
+  const { children, width, height, className, userIdClassName } = props
   const opts = `dependent=${1}, alwaysOnTop=${1}, alwaysRaised=${1}, alwaysRaised=${1}, width=${width || 500
     }, height=${height || 400} left=${left} top=${top}`
   browser = window.self
@@ -63,8 +68,8 @@ const ZKAuth = (props) => {
 
   return (
     <div>
-      <div className={className} onClick={onClickHandler}>{children}</div>
-      {userId && <div>UserID: {userId}</div>}
+      {!userId && <div className={className} onClick={onClickHandler}>{children}</div>}
+      {userId && <div className={userIdClassName}>Signed In as UserID: {truncateUserId(userId)}</div>}
     </div>
   )
 }
