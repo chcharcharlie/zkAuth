@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Input, Button } from '@mui/material';
 import generateZKProof from './utils.js';
 
-function CodePrompt({ email, timestamp, emailHash, statementIdx, setIsVerified }) {
+function CodePrompt({ email, timestamp, emailHash, statementIdx }) {
   const [code, setCode] = useState('');
 
   const handleInputChange = (event) => {
@@ -11,9 +11,13 @@ function CodePrompt({ email, timestamp, emailHash, statementIdx, setIsVerified }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const res = await generateZKProof(email, code, timestamp, emailHash, statementIdx, setIsVerified)
+    const res = await generateZKProof(email, code, timestamp, emailHash, statementIdx)
     console.log(`User entered code: ${code}`);
-    window.opener.onSuccess(res)
+    if (window.opener) {
+      console.log("pushing message back")
+      window.opener.postMessage(res, "http://localhost:3002")
+      window.close()
+    }
   };
 
   return (

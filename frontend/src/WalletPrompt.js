@@ -4,7 +4,7 @@ import Web3Modal from "web3modal";
 import { ethers } from 'ethers';
 import generateZKProof from './utils.js';
 
-function WalletPrompt({ setIsVerified }) {
+function WalletPrompt() {
   const providerOptions = {}
 
   const web3Modal = new Web3Modal({
@@ -27,9 +27,11 @@ function WalletPrompt({ setIsVerified }) {
     console.log(address)
     const nonce = await getNonce(address)
     const proofInputs = await getProofInputs(address, nonce, signer)
-    const res = await generateZKProof(address, proofInputs["verificationCode"], proofInputs["timeStamp"], proofInputs["walletAddressHash"], proofInputs["statementIdx"], setIsVerified)
+    const res = await generateZKProof(address, proofInputs["verificationCode"], proofInputs["timeStamp"], proofInputs["walletAddressHash"], proofInputs["statementIdx"])
     if (window.opener) {
+      console.log("pushing message back")
       window.opener.postMessage(res, "http://localhost:3002")
+      window.close()
     }
   };
 

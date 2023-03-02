@@ -11,16 +11,13 @@ function App() {
   const [timestamp, setTimestamp] = useState('');
   const [emailHash, setEmailHash] = useState('');
   const [statementIdx, setStatementIdx] = useState('');
-  const [isVerified, setIsVerified] = useState(false);
 
   return (
     <div className="App">
       <div className="title">
         ZKAuth
       </div>
-      <WalletPrompt
-        setIsVerified={setIsVerified}>
-      </WalletPrompt>
+      <WalletPrompt />
       {
         !showCodePrompt && showEmailPrompt ?
           <EmailPrompt
@@ -34,8 +31,7 @@ function App() {
           </EmailPrompt> : <div />
       }
       {!showEmailPrompt && !showCodePrompt ? <div onClick={() => setShowEmailPrompt(true)} className="signin-button">Sign in with Email</div> : <div />}
-      {showCodePrompt ? <CodePrompt email={email} timestamp={timestamp} emailHash={emailHash} statementIdx={statementIdx} setIsVerified={setIsVerified}></CodePrompt> : <div />}
-      <div>{isVerified}</div>
+      {showCodePrompt ? <CodePrompt email={email} timestamp={timestamp} emailHash={emailHash} statementIdx={statementIdx}></CodePrompt> : <div />}
       <div className='footer'>Build with ❤️ in ETHDenver 2023</div>
     </div >
   );
