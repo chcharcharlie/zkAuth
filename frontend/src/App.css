@@ -50,11 +50,12 @@
 }
 
 .wallet-pop-up-text {
-  border: 2px solid #d997ff;
+  /* border-top: 2px solid #d997ff; */
   padding: 8px 16px;
-  border-radius: 5px;
-  background-color: #d997ff;
+  /* border-radius: 5px; */
+  /* background-color: #d997ff; */
   color: #a347ff;
   font-weight: bold;
-  margin: 8px;
+  font-size: 20px;
+  margin: 12px;
 }
