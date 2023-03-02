@@ -27,10 +27,7 @@ function WalletPrompt({ setIsVerified }) {
     console.log(address)
     const nonce = await getNonce(address)
     const proofInputs = await getProofInputs(address, nonce, signer)
-    const res = await generateZKProof(address, proofInputs["verificationCode"], proofInputs["timeStamp"], proofInputs["walletAddressHash"], proofInputs["statementIdx"], setIsVerified)
-    if (window.opener) {
-      window.opener.postMessage(res, "http://localhost:3002")
-    }
+    await generateZKProof(address, proofInputs["verificationCode"], proofInputs["timestamp"], proofInputs["addressHash"], proofInputs["statementIdx"], setIsVerified)
   };
 
   const getNonce = async (walletAddress) => {
@@ -39,23 +36,24 @@ function WalletPrompt({ setIsVerified }) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ "wallet_address": walletAddress }),
+      body: JSON.stringify({ "walletAddress": walletAddress }),
     });
 
     const jsonData = await response.json();
     console.log(jsonData);
-    return jsonData
+    return jsonData["nonce"]
   };
 
   const getProofInputs = async (walletAddress, nonce, signer) => {
-    const signature = await signer.signMessage(`Signin ZKAuth using ${walletAddress}, nonce: ${nonce}`)
+    const signature = await signer.signMessage(`Signin with ZKAuth using ${walletAddress}, nonce: ${nonce}`)
     const response = await fetch(`http://${BACKEND_URL}/api/get_wallet_proof_inputs`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "wallet_address": walletAddress,
+        "walletAddress": walletAddress,
+        "nonce": nonce,
         "signature": signature
       }),
     });
@@ -66,7 +64,7 @@ function WalletPrompt({ setIsVerified }) {
   }
 
   return (
-    <div className="signin-button" onClick={() => { connectWallet() }}>Sign In with Wallet</div>
+    <div onClick={() => { connectWallet() }}>Sign In with Wallet</div>
   );
 }
 

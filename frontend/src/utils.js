@@ -1,7 +1,6 @@
 import { BACKEND_URL } from './constants';
 const { poseidon } = require('circomlib')
 const snarkjs = require("snarkjs")
-// const fs = require('fs')
 const { contractABI } = require("./constants.js")
 const { ethers } = require('ethers');
 
@@ -18,7 +17,7 @@ function calculateMerklePath(elements, position, levels) {
 
   while (levels > 0) {
     var new_stack = []
-    for (var i = 0; i * 2 < current_stack.length; i++) {
+    for (i = 0; i * 2 < current_stack.length; i++) {
       const val1 = current_stack[i * 2];
       const val2 = i * 2 + 1 < current_stack.length ? current_stack[i * 2 + 1] : 0
       if (val2 === 0 || val1 < val2) {
@@ -50,13 +49,6 @@ const sleep = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-// const proofInputsData = fs.readFileSync('../data/user_proof_inputs.json')
-// const proofInputs = JSON.parse(proofInputsData)
-// const emailHash = proofInputs.emailHash
-// const randomizer = 133847
-// const statementIdx = 2
-const appPublicId = 100
-
 const generateZKProof = async (email, verificationCode, timestamp, emailHash, statementIdx, setIsVerified) => {
   const contract = new ethers.Contract(contractAddress, contractABI, infuraProvider);
 
@@ -67,84 +59,55 @@ const generateZKProof = async (email, verificationCode, timestamp, emailHash, st
     merkle_state = await contract.getState()
   }
 
-  contract.getState().then((merkle_state) => {
-    const { path, pathIndices } = calculateMerklePath(merkle_state[0], statementIdx, 8)
-    console.log("Start to do snarkjs fullProve")
+  const { path, pathIndices } = calculateMerklePath(merkle_state[0], statementIdx, 8)
+  console.log("Start to do snarkjs fullProve")
+  const appPublicId = 100
 
-    snarkjs.plonk.fullProve(
-      {
-        emailHash: emailHash,
-        verificationCode: verificationCode,
-        randomizer: timestamp,
-        path: path,
-        pathIndices: pathIndices,
-        appPublicId: appPublicId,
-      },
-      "./circuit.wasm",
-      "./circuit_final.zkey"
-    ).then(
-      async (res) => {
-        // fs.writeFileSync(
-        //   '../data/user_proof.json',
-        //   JSON.stringify(res.proof, (key, value) =>
-        //     typeof value === 'bigint'
-        //       ? value.toString()
-        //       : value // return everything else unchanged
-        //   ),
-        // )
+  const res = await snarkjs.plonk.fullProve(
+    {
+      emailHash: emailHash,
+      verificationCode: verificationCode,
+      randomizer: timestamp,
+      path: path,
+      pathIndices: pathIndices,
+      appPublicId: appPublicId,
+    },
+    "./circuit.wasm",
+    "./circuit_final.zkey"
+  )
 
-        // fs.writeFileSync(
-        //   '../data/public_results.json',
-        //   JSON.stringify(
-        //     {
-        //       "userId": res.publicSignals[1],
-        //       "nullifier": res.publicSignals[2],
-        //       "appPublicId": res.publicSignals[3],
-        //     },
-        //     (key, value) =>
-        //       typeof value === 'bigint'
-        //         ? value.toString()
-        //         : value // return everything else unchanged
-        //   ),
-        // )
+  const userId = res.publicSignals[1]
+  const nullifier = res.publicSignals[2]
+  const proof = JSON.stringify(res.proof, (key, value) =>
+    typeof value === 'bigint'
+      ? value.toString()
+      : value // return everything else unchanged
+  )
 
-        const userId = res.publicSignals[1]
-        const nullifier = res.publicSignals[2]
-        const appPublicId = res.publicSignals[3]
-        const proof = JSON.stringify(res.proof, (key, value) =>
-          typeof value === 'bigint'
-            ? value.toString()
-            : value // return everything else unchanged
-        )
+  console.log("Generated proof for userId, appPublicId and nullifier:")
+  console.log(res.publicSignals[1], res.publicSignals[3], res.publicSignals[2])
+  console.log("Proof will be verified if merkle root is equal to:")
+  console.log(res.publicSignals[0])
 
-        console.log("Generated proof for userId, appPublicId and nullifier:")
-        console.log(res.publicSignals[1], res.publicSignals[3], res.publicSignals[2])
-        console.log("Proof will be verified if merkle root is equal to:")
-        console.log(res.publicSignals[0])
-
-        return {
-          "publicResults": {
-            "userId": userId,
-            "nullifier": nullifier,
-            "appPublicId": appPublicId,
-          },
-          "proof": proof,
-        }
-      }).then(
-        async (data) => {
-          const response = await fetch(`http://${BACKEND_URL}/api/validate_proof`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          });
-
-          const jsonData = await response.json()
-          setIsVerified(jsonData["isVerified"])
-          return
-        });
+  const data = {
+    "publicResults": {
+      "userId": userId,
+      "nullifier": nullifier,
+      "appPublicId": appPublicId,
+    },
+    "proof": proof,
+  }
+  const response = await fetch(`http://${BACKEND_URL}/api/validate_proof`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
   });
+
+  const jsonData = await response.json()
+  setIsVerified(jsonData["isVerified"])
+  return data
 }
 
 export default generateZKProof;
