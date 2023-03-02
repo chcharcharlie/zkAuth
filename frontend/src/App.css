@@ -41,6 +41,7 @@
   margin: 8px; /* Set margin */
   cursor: pointer; /* Set cursor type */
   border-radius: 16px; /* Add border radius */
+  font-weight: bold;
 }
 
 .App-logo {
@@ -49,9 +50,11 @@
 }
 
 .wallet-pop-up-text {
-  margin-top: 20px;
-  text-align: center;
-  color: #7300e6;
-  font-size: large;
-  font-variant-caps: all-petite-caps;
+  border: 2px solid #d997ff;
+  padding: 8px 16px;
+  border-radius: 5px;
+  background-color: #d997ff;
+  color: #a347ff;
+  font-weight: bold;
+  margin: 8px;
 }

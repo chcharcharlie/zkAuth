@@ -74,7 +74,12 @@ function WalletPrompt({ setShowSignInEmailPrompt }) {
   if (messageState === "WALLET_POP_UP") {
     return <div className="wallet-pop-up-text">Please sign in using your browser based wallet...</div>
   } else if (messageState === "LOADING") {
-    return <CircularStatic />;
+    return (
+      <div>
+        <CircularStatic />
+        <div className="wallet-pop-up-text">Generating ZK Proof...</div>
+      </div>
+    );
   } else {
     return (
       <div className="signin-button" onClick={() => { connectWallet(); setShowSignInEmailPrompt(false); setMessageState("WALLET_POP_UP") }}>Sign In with Wallet</div>
