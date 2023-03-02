@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import ZKAuth from './ZKAuth'
+import ZKAuth from 'zkauth/dist/ZKAuth'
 
 function App() {
   const [userId, setUserId] = useState(false);
