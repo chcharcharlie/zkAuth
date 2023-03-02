@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { BACKEND_URL } from './constants';
 
 let browser = window
 let popup = null
@@ -18,26 +19,12 @@ function watcher() {
   }
 }
 
-const WindowOpener = (props) => {
+const ZKAuth = (props) => {
   const { children, width, height, className } = props
-  const opts = `dependent=${1}, alwaysOnTop=${1}, alwaysRaised=${1}, alwaysRaised=${1}, width=${width || 300
+  const opts = `dependent=${1}, alwaysOnTop=${1}, alwaysRaised=${1}, alwaysRaised=${1}, width=${width || 500
     }, height=${height || 400} left=${left} top=${top}`
   browser = window.self
-  browser.onSuccess = (res) => {
-    props.bridge(null, res)
-  }
-
-  browser.onError = (error) => {
-    props.bridge(error)
-  }
-
-  browser.onOpen = (message) => {
-    props.bridge(null, message)
-  }
-
-  browser.onClose = (message) => {
-    props.bridge(null, message)
-  }
+  const [userId, setUserId] = useState(false);
 
   const onClickHandler = (evt) => {
     console.log('onClickHandler', props)
@@ -45,26 +32,41 @@ const WindowOpener = (props) => {
     const { url, name } = props
     if (popup && !popup.closed) {
       popup.focus()
-
       return
     }
 
     popup = browser.open(url, name, opts)
-
-
     if (timer === null) {
       timer = setInterval(watcher, 500)
     }
-
     return
   }
 
-  browser.addEventListener("message", (event) => {
-    if (event.origin === "http://localhost:3000")
-      console.log(event);
+  browser.addEventListener("message", async (event) => {
+    if (event.origin === "http://localhost:3000") {
+      const data = event.data
+      const response = await fetch(`http://${BACKEND_URL}/api/validate_proof`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+      const response_json = await response.json()
+      if (response_json.isVerified) {
+        setUserId(data.publicResults.userId)
+      } else {
+        setUserId("Sign in failed")
+      }
+    }
   }, false);
 
-  return <div className={className} onClick={onClickHandler}>{children}</div>
+  return (
+    <div>
+      <div className={className} onClick={onClickHandler}>{children}</div>
+      {userId && <div>UserID: {userId}</div>}
+    </div>
+  )
 }
 
 const dualScreenLeft =
@@ -75,7 +77,7 @@ const dualScreenTop =
 const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth
 const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight
 const systemZoom = width / window.screen.availWidth
-const left = (width - 300) / 2 / systemZoom + dualScreenLeft
+const left = (width - 500) / 2 / systemZoom + dualScreenLeft
 const top = (height - 400) / 2 / systemZoom + dualScreenTop
 
-export default WindowOpener
+export default ZKAuth

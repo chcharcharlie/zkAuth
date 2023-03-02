@@ -49,7 +49,7 @@ const sleep = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-const generateZKProof = async (email, verificationCode, timestamp, emailHash, statementIdx, setIsVerified) => {
+const generateZKProof = async (email, verificationCode, timestamp, emailHash, statementIdx) => {
   const contract = new ethers.Contract(contractAddress, contractABI, infuraProvider);
 
   var merkle_state = await contract.getState()
@@ -97,16 +97,6 @@ const generateZKProof = async (email, verificationCode, timestamp, emailHash, st
     },
     "proof": proof,
   }
-  const response = await fetch(`http://${BACKEND_URL}/api/validate_proof`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-
-  const jsonData = await response.json()
-  setIsVerified(jsonData["isVerified"])
   return data
 }
 
