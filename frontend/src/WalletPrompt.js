@@ -53,7 +53,7 @@ function WalletPrompt({ setShowSignInEmailPrompt }) {
   };
 
   const getProofInputs = async (walletAddress, nonce, signer) => {
-    const signature = await signer.signMessage(`Signin ZKAuth using ${walletAddress}, nonce: ${nonce}`)
+    const signature = await signer.signMessage(`Signin zkAuth using ${walletAddress}, nonce: ${nonce}`)
     const response = await fetch(`http://${BACKEND_URL}/api/get_wallet_proof_inputs`, {
       method: "POST",
       headers: {

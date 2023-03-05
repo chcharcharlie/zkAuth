@@ -134,7 +134,7 @@ async function getWalletProofInputs(req, res) {
   }
 
   // Verify the signature is with information we expected
-  const expectedAddress = web3.eth.accounts.recover('Signin ZKAuth using ' +
+  const expectedAddress = web3.eth.accounts.recover('Signin zkAuth using ' +
     walletAddress + ', nonce: ' +
     nonceInfo.nonce, signature);
   if (!expectedAddress || expectedAddress != walletAddress) {

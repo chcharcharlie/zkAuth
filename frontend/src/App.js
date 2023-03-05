@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="App">
       <div className="title">
-        ZKAuth
+        zkAuth
       </div>
       {showSignInWalletPrompt ? <WalletPrompt setShowSignInEmailPrompt={setShowSignInEmailPrompt} /> : <div />}
       {showSignInEmailPrompt ?
